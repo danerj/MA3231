@@ -1,0 +1,263 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{fullpage}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[shortlabels]{enumitem}
+
+
+\title{MA 3231 Homework 3}
+\date{}
+\author{}
+
+\setlength\parindent{0pt}
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+
+%%%% 1 %%%%
+\item
+
+Consider the linear program:
+
+$\max z = 6x_1 + 10x_2$\\
+subject to \\
+$x_1 + 2x_2 \leq 5$\\
+$x_1 \leq 3$ \\
+$2x_2 \leq 4$ \\
+$x_1, x_2 \geq 0$\\
+
+Compare the efficiency of the implementation of the simplex algorithm if 
+
+\begin{enumerate}[a)]
+\item You are using the largest positive coefficient for the entering variable (and the lexicographic method for the leaving).
+
+\item You are using Bland's rule. 
+\end{enumerate}
+
+Answer: The linear program has a feasible solution $(0,0)$ so we do not need to solve an auxiliary problem.
+
+\begin{enumerate}[a)]
+
+
+\item The program written using slack variables modified to use the lexicographic method is: \\
+
+$\max z = 6x_1 + 10x_2$\\
+subject to \\
+$w_1 = 5 + \epsilon_1 - x_1 - 2x_2$\\
+$w_2 = 3 + \epsilon_2 - x_1$ \\
+$w_3 = 2 + \epsilon_3 - x_2$ \\
+$x_1, x_2, w_1, w_2, w_3 \geq 0$\\
+$0<\epsilon_1 << \epsilon_2 << \epsilon_3 << \text{ all other data}$. \\
+
+Now solve by the simplex method.
+
+\begin{align*}
+&\underline{z = 6x_1 + 10x_2} \\
+&w_1 = 5 + \epsilon_1 - x_1 - 2x_2 \\
+&w_2 = 3 + \epsilon_2 - x_1\\
+& w_3 = 2 + \epsilon_3 - x_2 \\
+&\\
+&\underline{z = 20 + 10\epsilon_3 + 6x_1 - 10w_3} \\
+&w_1 = 1 - \epsilon_1 - 2 \epsilon_3  - x_1 + 2w_3 \\
+&w_2 = 3 + \epsilon_2 - x_1\\
+& x_2 = 2 + \epsilon_3 - w_3 \\
+\end{align*}
+
+\begin{align*}
+&\underline{z = 26 - 6\epsilon_1 - 2\epsilon_3 - 6w_1 + 2w_3} \\
+&x_1 = 1 - \epsilon_1 - 2 \epsilon_3  - w_1 + 2w_3 \\
+&w_2 = 2 + \epsilon_1 + \epsilon_2 + 2\epsilon_3 + w_1 - 2w_3\\
+& x_2 = 2 + \epsilon_3 - w_3 \\
+&\\
+&\underline{z = 28 - 5\epsilon_1 + \epsilon_2 - 5w_1 -w_2} \\
+&x_1 = 3 + \epsilon_2 - w_2 \\
+&w_3 = 1 + \frac{1}{2}\epsilon_1 + \frac{1}{2}\epsilon_2 + \epsilon_3 + \frac{1}{2}w_1 - \frac{1}{2}w_2\\
+& x_2 = 1 - \frac{1}{2}\epsilon_1\ - \frac{1}{2}\epsilon_2 - \frac{1}{2}w_1 + \frac{1}{2}w_2\
+\end{align*}
+
+
+This dictionary is optimal. Drop the $\epsilon_i$ to find the solution to the unperturbed problem. This method required 3 simplex steps to arrive at the optimal solution. The optimal solution in the feasible region is:
+
+$$
+\boxed{ z = 28 \text{ at }
+(x_1, x_2) =  (3,1).}
+$$
+
+\item
+
+$\max z = 6x_1 + 10x_2$\\
+subject to \\
+$w_1 = 5  - x_1 - 2x_2$\\
+$w_2 = 3 - x_1$ \\
+$w_3 = 2  - x_2$ \\
+$x_1, x_2, w_1, w_2, w_3 \geq 0$
+
+\begin{align*}
+&\underline{z = 6x_1 + 10x_2} \\
+&w_1 = 5  - x_1 - 2x_2 \\
+&w_2 = 3 - x_1\\
+& w_3 = 2  - x_2 \\
+&\\
+&\underline{z = 18 + 10x_2 - 6w_2} \\
+&w_1 = 2 - 2x_2  + w_2 \\
+&x_1 = 3 - w_2\\
+& w_3 = 2 - x_2 \\
+&\\
+&\underline{z = 28  - 5w_1 - w_2} \\
+&x_2 = 1  -  \frac{1}{2}w_1 + \frac{1}{2} w_2 \\
+&x_1 = 3 - w_2\\
+& w_3 = 1 + \frac{1}{2}w_1 - \frac{1}{2} w_2 \\
+&\\
+\end{align*}
+
+This dictionary is optimal. The solution is still the same as in part a but for part b it took 2 simplex steps to arrive at the optimal solution while using Bland's rule. 
+
+
+\end{enumerate}
+
+\newpage
+%%%% 2 %%%%
+\item
+
+Consider the following linear programming problem:
+
+$\max z = 4x_1 -6x_2 + 2x_3 + 12x_4$\\
+subject to \\
+$3x_1 + 5x_2 + 4x_3 \leq 20$\\
+$2x_1 -x_3 + x_4 \leq 15$ \\
+$3x_2 + 2x_3 + 5x_4 \leq 30$\\
+$x_1, x_2, x_3, x_4 \geq 0$\\
+
+Find the dual program to this linear program.\\
+
+Answer: Given a linear program in standard form,
+
+\begin{align*}
+\max  & \sum_{j=1}^n c_j x_j \\
+\text{subject to }  & \sum_{j=1}^n a_{ij}x_j \leq b_i \quad  i = 1,2,\dots ,m \\
+& x_j \geq 0  \quad j = 1,2,\dots , n
+\end{align*}
+
+the associated dual linear program is given by
+
+\begin{align*}
+\min & \sum_{i=1}^m b_iy_i \\
+\text{subject to } & \sum_{i=1}^m y_i a_{ij} \geq c_j \quad j = 1,2,\dots , n \\
+y_i & \geq 0 \quad i= 1,2,\dots , m
+\end{align*}
+
+It may be helpful to rewrite the given linear program to include 0 coefficients in the constraints.
+
+$\max z = 4x_1 -6x_2 + 2x_3 + 12x_4$\\
+subject to \\
+$3x_1 + 5x_2 + 4x_3  + 0x_4\leq 20$\\
+$2x_1 + 0 x_2 - x_3 + x_4 \leq 15$ \\
+$0x_1 + 3x_2 + 2x_3 + 5x_4 \leq 30$\\
+$x_1, x_2, x_3, x_4 \geq 0$\\
+
+The dual linear program associated with the given linear program is 
+
+$\min s = 20y_1 + 15y_2 + 30y_3$ \\
+subject to \\
+$3y_1 + 2y_2  \geq 4$ \\
+$5y_1  +3y_3 \geq -6$ \\
+$4y_1 - y_2 + 2y_3 \geq 2$ \\
+$y_2 + 5y_3 \geq 12$\\
+$y_1,y_2,y_3 \geq 0$\\
+
+\newpage
+%%% 3 %%%
+\item
+
+Consider the following dual linear programming problem: \\
+
+$\min \xi = 6y_1 + 2y_2 + 4y_3$\\
+subject to\\
+$2y_1 + 3y_2 -y_3 \geq 5$ \\
+$-y_1 + 4y_3 \geq 10$ \\
+$2y_1 + 4y_2 \geq 14$ \\
+$3y_1 -2y_3 \geq 7$ \\
+$y_1, y_2, y_3 \geq 0$\\
+
+\begin{enumerate}[a)]
+\item Rewrite the problem in standard form.
+
+\item What is the primal problem corresponding to this dual linear program?
+\end{enumerate}
+
+Answer:
+
+\begin{enumerate}[a)]
+\item 
+
+$-\max -\xi = -6y_1 - 2y_2 - 4y_3$\\
+subject to\\
+$-2y_1 - 3y_2 +y_3 \leq -5$ \\
+$y_1 - 4y_3 \leq -10$ \\
+$-2y_1 - 4y_2 \leq -14$ \\
+$-3y_1 +2y_3 \leq -7$ \\
+$y_1, y_2, y_3 \geq 0$\\
+
+\item
+
+It may help to rewrite the given dual linear program with the 0 coefficients in the constraints included.\\
+
+$\min \xi = 6y_1 + 2y_2 + 4y_3$\\
+subject to\\
+$2y_1 + 3y_2 -y_3 \geq 5$ \\
+$-y_1 + 0y_2 + 4y_3 \geq 10$ \\
+$2y_1 + 4y_2 + 0y_3 \geq 14$ \\
+$3y_1 +0y_2 -2y_3 \geq 7$ \\
+$y_1, y_2, y_3 \geq 0$\\
+
+The primal problem corresponding to the given dual linear program is: \\
+
+$\max z = 5x_1 + 10x_2 + 14x_3 + 7x_4$\\
+subject to\\
+$2x_1 - x_2 + 2x_3 + 3x_4 \leq 6$ \\
+$3x_1 + 4x_3  \leq 2$ \\
+$-x_1 + 4x_2 -2x_4 \leq 4$ \\
+$x_1, x_2, x_3, x_4 \geq 0$\\
+\end{enumerate}
+
+\newpage
+%%% 4 %%%
+\item
+
+Write a MATLAB code which lets you solve both the primal and the dual linear
+program for different input coefficients $a_{ij} , b_i, c_j$ for $i = 1,\dots ,4$ and $j = 1,\dots ,4$. You
+already have the code for the primal LP given a constraint matrix $A = (a_{ij})$, objective coefficient vector $f = (c_1,\dots ,c_n)$, and constraint vector $b = (b_1,\dots ,b_m)$. So you just have to figure out what matrices and vectors to plug into the linprog function when you
+want to find the dual of this LP). \\
+
+Using your MATLAB code, try solving different linear programs (and their dual LPs)
+with different values for the coefficients, in order to find an answer to the following
+questions:\\
+
+– If both the primal and the dual problem have optimal solutions, how do they
+compare?\\
+– If the primal problem is infeasible, what is happening with the dual problem?\\
+– If the primal problem is unbounded, what is happening with the dual problem?\\
+– If the dual problem is infeasible, what is happening with the primal problem?\\
+– If the dual problem is unbounded, what is happening with the primal problem? \\
+
+Answer: Matlab programs will vary between students but should support the following conclusions.\\
+
+- If both the primal and the dual problem have optimal solutions, the optimal values for the respective objective functions are equal. Both have the same number of variables set equal to 0.\\
+
+– If the primal problem is infeasible, the dual problem is infeasible or unbounded. \\
+
+– If the primal problem is unbounded, the dual problem is infeasible. \\
+
+– If the dual problem is infeasible, the primal problem is infeasible or unbounded. \\
+
+– If the dual problem is unbounded, the primal problem is infeasible. 
+
+
+\end{enumerate}
+
+\end{document}
