@@ -1,0 +1,273 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{fullpage}
+\usepackage{graphicx}
+\usepackage{float}
+
+
+\title{MA 3231 Homework 2}
+\date{}
+\author{}
+
+\setlength\parindent{0pt}
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+
+%%%% 1 %%%%
+\item
+
+Solve the following linear program using the simplex algorithm:
+
+$\max z = 10x_1 + 6x_2 + 4x_3$\\
+subject to \\
+$4x_1 + 5x_2 + 2x_3 + x_4 \leq 20$\\
+$3x_1 + 4x_2 - x_3 + x_4 \leq 30$ \\
+$x_1, x_2, x_3, x_4 \geq 0$\\
+
+Answer: An initial feasible solution to this problem is $(x_1,x_2,x_3,x_4) = 0$. The problem written in an equivalent form using slack variables is:\\
+
+$\max z = 10x_1 + 6x_2 + 4x_3$\\
+subject to \\
+$w_1 = 20 - 4x_1 - 5x_2 - 2x_3 - x_4$\\
+$w_2 = 30 - 3x_1 - 4x_2 + x_3 - x_4$ \\
+$x_1, x_2, x_3, x_4, w_1, w_2 \geq 0$\\
+
+Now solve by the simplex method.
+
+\begin{align*}
+&\underline{z = 10x_1 + 6x_2 + 4x_3} \\
+&w_1 = 20 - 4x_1 - 5x_2 - 2x_3 - x_4 \\
+&w_2 = 30 - 3x_1 - 4x_2 + x_3 - x_4\\
+&\\
+&\underline{z = 50  - \frac{13}{2}x_2 - x_3 - \frac{5}{4}x_4 - \frac{5}{2}w_1} \\
+&x_1 = 5 - \frac{5}{4}x_2 - \frac{1}{2}x_3 -\frac{1}{4} x_4 - \frac{1}{4}w_1 \\
+&w_2 = 15 -\frac{1}{4}x_2 + \frac{5}{2}x_3- \frac{1}{4}x_4 + \frac{3}{4}w_1\\
+&\\
+\end{align*}
+
+This dictionary is optimal. The maximum value of $z$ in the feasible region is 
+
+$$
+\boxed{ z = 50 \text{ at }
+(x_1, x_2, x_3, x_4) =  (5,0,0,0).}
+$$
+
+\newpage
+%%%% 2 %%%%
+\item
+
+Solve the following linear program using the simplex algorithm:
+
+$\min z = -7x_1 - 8x_2$\\
+subject to \\
+$4x_1 +x_2 \leq 100$\\
+$-2x_1 - 2x_2 \geq -160$ \\
+$x_1 \leq 40$\\
+$x_1, x_2 \geq 0$\\
+
+Answer: First rewrite this program in standard form. This shows that we should maximize $z' = -z$ in the feasible region. Afterward, negate this maximum value of $z'$ to find the minimum value of $z$ in the feasible region. \\
+
+$-\max -z = 7x_1 + 8x_2$\\
+subject to \\
+$4x_1 +x_2 \leq 100$\\
+$2x_1 + 2x_2 \leq 160$ \\
+$x_1 \leq 40$\\
+$x_1, x_2 \geq 0$\\
+
+With $(x_1, x_2) = (0,0)$ as an initial feasible solution, solve the following problem:\\
+
+$\max z' = 7x_1 + 8x_2$\\
+subject to \\
+$w_1 = 100 - 4x_1 - x_2$\\
+$w_2 = 160 - 2x_1 - 2x_2$ \\
+$w_3 = 40 - x_1$ \\
+$x_1, x_2, w_1, w_2, w_3 \geq 0$\\
+
+\begin{align*}
+&\underline{z' = 7x_1 + 8x_2} \\
+&w_1 = 100 - 4x_1 - x_2 \\
+&w_2 = 160 - 2x_1 - 2x_2 \\
+&w_3 = 40 - x_1 \\
+&\\
+&\underline{z' = 640 - x_1 - 4w_2} \\
+&w_1 = 20 - 3x_1 - \frac{1}{2}w_2 \\
+&x_2 = 80 - x_1 - \frac{1}{2}w_2 \\
+&w_3 = 40 - x_1 \\
+&\\
+\end{align*}
+
+The maximum value of $z'$ in the feasible region is $z' = 640$ at $(x_1,x_2) = (0, 80)$. For the original problem this means the minimum value of $z$ in the feasible region is
+
+$$
+\boxed{z = -640 \text{ at } (x_1, x_2) = (0,80).}
+$$
+
+\newpage
+%%%% 3 %%%%
+\item
+
+Solve the following linear program using the simplex algorithm and a suitable auxiliary program:
+
+$\max z = 2x_1 + 6x_2$\\
+subject to\\
+$-x_1 - x_2 \leq -3$\\
+$-3x_1 + 3x_2 \leq 3$\\
+$x_1 + 2x_2 \leq 2$ \\
+$x_1, x_2 \geq 0$\\
+
+Answer: \\
+
+\underline{Phase 1}\\
+max $\xi = -x_0$\\
+subject to\\
+$-x_1 - x_2 -x_0\leq -3$\\
+$-3x_1 + 3x_2 - x_0 \leq 3$\\
+$x_1 + 2x_2 -x_0 \leq 2$ \\
+$x_0, x_1, x_2\geq 0$\\
+
+\begin{align*}
+&\underline{\xi = -x_0} \\
+&w_1 = -3 + x_1 + x_2 + x_0 \\
+&w_2 = 3 + 3x_1 - 3x_2 + x_0 \\
+&w_3 = 2 - x_1 - 2x_2 + x_0 \\
+&\\
+&\underline{\xi = -3 +x_1 + x_2 - w_1} \\
+&x_0 = 3 - x_1 - x_2 + w_1 \\
+&w_2 = 6 + 2x_1 - 4x_2 + w_1 \\
+&w_3 = 5 -2x_1 - 3x_2 + w_1 \\
+&\\
+&\underline{\xi = -\frac{1}{2} - \frac{1}{2}x_2 - \frac{1}{2}w_1 - \frac{1}{2}w_3} \\
+&x_0 = \frac{1}{2} +  \frac{1}{2}x_1 + \frac{1}{2}w_1 + \frac{1}{2}w_3\\
+&w_2 = 6 + 2x_1 - 4x_2 + w_1 \\
+&x_1 = \frac{5}{2} - \frac{3}{2} x_2 + \frac{1}{2}w_1 - \frac{1}{2}w_3 \\
+\end{align*}
+
+The optimal solution to the auxiliary problem is $\xi = -\frac{1}{2}$ with $(x_0, x_1, x_2) = (\frac{1}{2}, \frac{5}{2}, 0)$. Since $x_0 \neq 0$ for the optimal solution to the auxiliary problem, the original problem is infeasible. Do not perform Phase 2. 
+
+\newpage
+%%%% 4 %%%%
+\item
+
+Solve the following linear program using the simplex algorithm and a suitable auxiliary program:
+
+$\min z = -2x_1 - 3x_2 - 4x_3$\\
+subject to\\
+$2x_2 + 3x_3 \geq 5$\\
+$x_1 + x_2 + 2x_3 \leq 4$\\
+$x_1 + 2x_2 + 3x_3 \leq 7$\\
+$x_1, x_2, x_3 \geq 0$ \\
+
+Answer: To solve this problem, find the optimal solution to the following problem in standard form and then negate the result for $z'$. 
+
+$\max z' = 2x_1 + 3x_2 + 4x_3$\\
+subject to\\
+$-2x_2 - 3x_3 \leq -5$\\
+$x_1 + x_2 + 2x_3 \leq 4$\\
+$x_1 + 2x_2 + 3x_3 \leq 7$\\
+$x_1, x_2, x_3 \geq 0$ \\
+
+\underline{Phase 1}\\
+$\max \xi = -x_0$\\
+subject to\\
+$-2x_2 - 3x_3 - x_0\leq -5$\\
+$x_1 + x_2 + 2x_3 - x_0\leq 4$\\
+$x_1 + 2x_2 + 3x_3 - x_0\leq 7$\\
+$x_0, x_1, x_2, x_3 \geq 0$ \\
+
+\begin{align*}
+&\underline{\xi = -x_0} \\
+&w_1 = -5 +2x_2 + 3x_3 + x_0\\
+&w_2 = 4 - x_1 - x_2 - 2x_3 + x_0\\
+&w_3 = 7 - x_1 - 2x_2 - 3x_3 + x_0 \\
+&\\
+&\underline{\xi = -5 + 2x_2 + 3x_3 - w_1} \\
+&x_0 = 5 - 2x_2 - 3x_3 + w_1\\
+&w_2 = 9  - x_1 - 3 x_2 - 5 x_3 + w_1\\
+&w_3 =12 - x_1 -4x_2 - 6x_3 + w_1\\
+&\\
+&\underline{\xi = -x_0} \\
+&x_3 = \frac{5}{3} - \frac{2}{3} x_2 + \frac{1}{3} w_1 - \frac{1}{3}x_0\\
+&w_2 = \frac{2}{3} -x_1 + \frac{1}{3}x_2 - \frac{2}{3}w_1+ \frac{5}{3}x_0\\
+&w_3 = 2 - x_1 - w_1 + 2x_0\\
+&\\
+\end{align*}
+
+This dictionary is optimal with $\xi$ maximized at $x_0 = 0$. Continue with Phase 2.\\
+
+\underline{Phase 2}
+Using the results of Phase 1, $z' = 2x_1 +3x_2 + 4x_3 = \frac{20}{3} + 2x_1 + \frac{1}{3}x_2 + \frac{4}{3}w_1$. 
+\begin{align*}
+&\underline{z' = \frac{20}{3} + 2x_1 + \frac{1}{3}x_2 + \frac{4}{3}w_1} \\
+&x_3 = \frac{5}{3} - \frac{2}{3} x_2 + \frac{1}{3} w_1\\
+&w_2 = \frac{2}{3} -x_1 + \frac{1}{3}x_2 - \frac{2}{3}w_1\\
+&w_3 = 2 - x_1 - w_1\\
+&\\
+&\underline{z' = 8 + x_2 - 2w_2} \\
+&x_3 = \frac{5}{3} - \frac{2}{3}x_2 + \frac{1}{3}w_1 \\
+&x_1 = \frac{2}{3} + \frac{1}{3}x_2 - \frac{2}{3}w_1 - w_2\\
+&w_3 = \frac{4}{3}- \frac{1}{3}x_2 - \frac{1}{3}w_1 + w_2 \\
+&\\
+&\underline{z' = \frac{21}{2} - \frac{3}{2}x_3 + \frac{1}{2}w_1 -2w_2} \\
+&x_2 = \frac{5}{2} - \frac{3}{2}x_3 - \frac{1}{2}w_1 \\
+&x_1 = \frac{3}{2} - \frac{1}{2}x_3 - \frac{1}{2}w_1 - w_2\\
+&w_3 = \frac{1}{2} + \frac{1}{2}x_3 - \frac{1}{2}w_1 + w_2 \\
+&\\
+&\underline{z' = 11 - x_3 - w_2 - w_3} \\
+&x_2 = 3 - x_3 + w_2 - w_3 \\
+&x_1 = 1 - x_3 - 2w_2 + w_3\\
+&w_1 = 1 + x_3 + 2w_2 - 2w_3 \\
+&\\
+\end{align*}
+
+The optimal solution is $z' = 11$ at $(x_1,x_2,x_3) = (1,3,0)$. The optimal solution to the original problem is therefore:
+
+$$
+\boxed{z = -11 \text{ at } (x_1,x_2,x_3) = (1,3,0).}
+$$
+
+\newpage
+%%%% 5 %%%%
+\item
+
+Explain why the following dictionary cannot be the optimal dictionary for any linear programming problem in which $w_1$ and $w_2$ are the initial slack variables:
+
+\begin{align*}
+&\underline{z = 4 - w_1 - 2x_2} \\
+&x_1 = 3 - 2x_2 \\
+&w_2 = 1 + w_1 -2x_2
+\end{align*}
+
+Answer: Suppose that to arrive at this dictionary, $x_1$ was the previous entering variable. Using $x_2 = \frac{3}{2} - \frac{1}{2}x_1$, the previous dictionary would have been:
+
+\begin{align*}
+&\underline{z = 1 + x_1 - w_1} \\
+&x_2 = \frac{3}{2} - \frac{1}{2}x_1 \\
+&w_2 = -2 + x_1 + w_1
+\end{align*}
+
+For $x_1 = w_1 = 0$, this does not satisfy the requirement that $w_2 \geq 0$. So this could not have been the previous dictionary. Suppose instead that $w_2$ was the previous entering variable. The previous dictionary would have been one of the following:
+
+\begin{align*}
+&\underline{z = 3 + 2x_2 + w_2} \\
+&x_1 = 3-2x_2 \\
+&w_1 = 1 - 2x_2 - w_2 \\
+&\\
+&\text{or}\\
+&\\
+&\underline{z = 3 - 2w_1 + w_2} \\
+&x_1 = 2 - w_1 + w_2 \\
+&x_2 = \frac{1}{2} + \frac{1}{2}w_1 - \frac{1}{2}w_2
+\end{align*}
+
+This means it would not be possible to write the initial slack variables $w_1$ and $w_2$ as functions of $x_1$ and $x_2$.  The dictionary cannot have come from a problem written in standard slack form. 
+
+
+
+\end{enumerate}
+
+\end{document}
